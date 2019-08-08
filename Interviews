@@ -1,0 +1,18 @@
+SELECT X1.contest_id, X1.hacker_id, X1.name, 
+SUM(X6.total_submissions), SUM(X6.total_accepted_submissions), SUM(X7.total_views),SUM(X7.total_unique_views) 
+FROM Contests X1 
+JOIN Colleges X2 ON X1.contest_id = X2.contest_id
+JOIN Challenges X3 ON X2.college_id = X3.college_id
+LEFT JOIN 
+(SELECT X5.challenge_id, SUM(X5.total_submissions) AS total_submissions ,SUM(X5.total_accepted_submissions) AS total_accepted_submissions
+FROM Submission_Stats X5 GROUP BY X5.challenge_id) AS X6 
+ON X3.challenge_id = X6.challenge_id
+LEFT JOIN
+(SELECT X4.challenge_id,SUM(X4.total_views) AS total_views, 
+ SUM(X4.total_unique_views) AS total_unique_views 
+ FROM View_Stats X4 GROUP BY X4.challenge_id) AS X7  
+ ON X3.challenge_id = X7.challenge_id
+GROUP BY X1.contest_id, X1.hacker_id, X1.name
+HAVING SUM(X6.total_submissions)+SUM(X6.total_accepted_submissions)
++SUM(X7.total_views)+SUM(X7.total_unique_views)>0
+ORDER BY X1.contest_id;
