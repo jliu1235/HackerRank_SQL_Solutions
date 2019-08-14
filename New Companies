@@ -7,3 +7,15 @@ WHERE c.company_code = l.company_code AND
       s.senior_manager_code = m.senior_manager_code AND
       m.manager_code = e.manager_code
 GROUP BY c.company_code, c.founder ORDER BY c.company_code;
+
+--SOLUTION TWO: USING JOIN
+
+SELECT DISTINCT c.company_code, c.founder, COUNT(DISTINCT e.lead_manager_code),COUNT(DISTINCT  e.senior_manager_code),
+COUNT(DISTINCT  e.manager_code),COUNT(DISTINCT  e.employee_code)
+FROM Employee e
+LEFT OUTER JOIN Company c ON e.company_code = c.company_code
+LEFT OUTER JOIN Lead_Manager l  ON e.lead_manager_code = l.lead_manager_code
+LEFT OUTER JOIN Senior_Manager s  ON e.senior_manager_code = s.senior_manager_code
+LEFT OUTER JOIN Manager m  ON e.manager_code = m.manager_code
+GROUP BY c.company_code, c.founder
+ORDER BY c.company_code;
