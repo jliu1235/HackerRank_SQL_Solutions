@@ -4,3 +4,13 @@ JOIN Friends AS f ON s.ID = f.ID
 JOIN Packages AS fp ON f.Friend_ID = fp.ID
 WHERE sp.Salary < fp.Salary
 ORDER BY fp.Salary;
+
+SOLUTION 2: LEFT JOIN
+
+SELECT s.Name FROM Students s 
+LEFT JOIN Packages sp ON s.ID = sP.ID
+LEFT JOIN Friends f ON s.ID = f.ID
+LEFT JOIN Packages fp ON f.Friend_ID = fp.ID
+WHERE sp.Salary < fp.Salary
+ORDER BY fp.Salary;
+
