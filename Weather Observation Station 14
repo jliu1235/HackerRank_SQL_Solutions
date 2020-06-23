@@ -1,3 +1,6 @@
 SELECT ROUND(LAT_N,4)  FROM STATION 
 WHERE LAT_N<137.2345 
 ORDER BY LAT_N DESC LIMIT 1 ;
+
+--solution 2
+select round(max(LAT_N),4) from STATION where round(LAT_N,4) < 137.2345;
